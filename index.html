@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forever Field Guide</title>
+<meta name="description" content="A fan-made setup guide for World of Warcraft: Forever: hidden graphics commands, built-in tools worth turning on, and the addons that work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='9' fill='%23E7A93B'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the guide</a>
+
+<div class="shell">
+  <nav class="toc" aria-label="Sections">
+    <p class="toc-title">Forever Field Guide</p>
+    <ol>
+      <li><a href="#look">Make it look better</a></li>
+      <li><a href="#avoid">What to skip</a></li>
+      <li><a href="#builtin">Built-in tools</a></li>
+      <li><a href="#addons">Addons</a></li>
+      <li><a href="#next">Coming next</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ol>
+    <p class="toc-note">Checked against client 1.60.1, November 2026.</p>
+  </nav>
+
+  <main id="main">
+    <header class="hero">
+      <h1>Forever, turned all the way up.</h1>
+      <p class="lede">The graphics menu stops short of what the engine can draw. Paste these into chat once and Azeroth gets thick grass to the horizon, distant hills that keep their shape, and water that reflects the trees.</p>
+
+      <div class="console" aria-labelledby="console-label">
+        <div class="console-bar">
+          <span id="console-label">Click a line to copy it, paste it into chat, press Enter. Chat runs one line at a time.</span>
+        </div>
+        <ul class="lines">
+          <li><button type="button" class="line">/console groundEffectDensity 256</button></li>
+          <li><button type="button" class="line">/console groundEffectDist 500</button></li>
+          <li><button type="button" class="line">/console groundEffectFade 370</button></li>
+          <li><button type="button" class="line">/console lodObjectFadeScale 200</button></li>
+          <li><button type="button" class="line">/console lodObjectCullSize 8</button></li>
+          <li><button type="button" class="line">/console doodadLodScale 200</button></li>
+          <li><button type="button" class="line">/console terrainLodDist 1000</button></li>
+          <li><button type="button" class="line">/console reflectionMode 3</button></li>
+          <li><button type="button" class="line">/console weatherDensity 3</button></li>
+          <li><button type="button" class="line">/console ResampleAlwaysSharpen 1</button></li>
+          <li><button type="button" class="line">/console cameraDistanceMaxZoomFactor 4</button></li>
+        </ul>
+      </div>
+      <p class="fineprint">Settings save to <code>WTF/Config.wtf</code> in your <code>_forever_</code> folder. Copy that file somewhere first; if anything goes wrong, put the copy back.</p>
+    </header>
+
+    <section id="look" aria-labelledby="look-h">
+      <h2 id="look-h">Make it look better</h2>
+      <p>Do these in order. The commands above only add detail on top of the in-game preset, so the preset comes first.</p>
+
+      <ol class="steps">
+        <li>
+          <h3>Set the graphics preset to 10</h3>
+          <p>Options → Graphics. A modern high-end card runs everything at maximum, including Secondary Lighting, Compute Effects and SSAO, which are the settings that draw the new fog and moonlight. Keep Render Scale at 100%.</p>
+        </li>
+        <li>
+          <h3>Paste the hidden commands</h3>
+          <p>Each one pushes a setting past where its slider stops.</p>
+          <table class="cvars">
+            <thead><tr><th scope="col">Command</th><th scope="col">What changes</th></tr></thead>
+            <tbody>
+              <tr><td><code>groundEffectDensity 256</code></td><td>Grass and flowers. The menu maximum is 48; 256 turns the Barrens and Elwynn into real fields. Drop to 128 if frame rate suffers.</td></tr>
+              <tr><td><code>groundEffectDist 500</code></td><td>Grass is drawn out to 500 yards instead of about 200.</td></tr>
+              <tr><td><code>groundEffectFade 370</code></td><td>Grass fades in gently at the edge instead of popping.</td></tr>
+              <tr><td><code>lodObjectFadeScale 200</code></td><td>Carts, wells, fences and signs stay visible from further away.</td></tr>
+              <tr><td><code>lodObjectCullSize 8</code></td><td>Small distant props stop being hidden.</td></tr>
+              <tr><td><code>doodadLodScale 200</code></td><td>Trees and rocks keep full detail further out.</td></tr>
+              <tr><td><code>terrainLodDist 1000</code></td><td>Distant hills keep their shape and textures.</td></tr>
+              <tr><td><code>reflectionMode 3</code></td><td>Water reflects trees, characters and mounts, not just the sky.</td></tr>
+              <tr><td><code>weatherDensity 3</code></td><td>Heaviest rain and snow. Storms last about 20 minutes.</td></tr>
+              <tr><td><code>ResampleAlwaysSharpen 1</code></td><td>Sharpening at 100% render scale. Forever looks soft without it.</td></tr>
+              <tr><td><code>cameraDistanceMaxZoomFactor 4</code></td><td>Lets the camera pull back about twice as far.</td></tr>
+            </tbody>
+          </table>
+        </li>
+        <li>
+          <h3>Tune sharpness and colour</h3>
+          <p>After the sharpen command, set <strong>Resample Sharpness</strong> (bottom of Graphics) to about 0.6. Higher looks grainy.</p>
+          <p>The new fog and lighting can take far more contrast than old WoW could. Start at:</p>
+          <dl class="dials">
+            <div><dt>Contrast</dt><dd>75–80</dd></div>
+            <div><dt>Brightness</dt><dd>48</dd></div>
+            <div><dt>Gamma</dt><dd>1.1</dd></div>
+          </dl>
+          <p>Raise gamma, not brightness, if caves are too dark to see the floor.</p>
+        </li>
+        <li>
+          <h3>Smooth out frame pacing</h3>
+          <p>Turn vsync off, cap the foreground frame rate a few frames under your monitor's refresh rate (160 on a 165 Hz panel), and turn on low-latency mode. A capped game runs cooler and more evenly than one hitting 400 fps in Goldshire.</p>
+        </li>
+        <li>
+          <h3>Optional: RTX HDR</h3>
+          <p>On an HDR monitor with an NVIDIA RTX card, RTX HDR in the NVIDIA app works at the driver level without touching the game. Install the NVIDIA driver released for Forever on 4 November first.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="avoid" aria-labelledby="avoid-h">
+      <h2 id="avoid-h">What to skip</h2>
+      <dl class="warnings">
+        <div>
+          <dt>ReShade</dt>
+          <dd>Modern WoW has blocked ReShade's <code>dxgi.dll</code> since 2025, players report bans, and Forever runs on the same client. The commands above get most of the same look safely.</dd>
+        </div>
+        <div>
+          <dt>NVIDIA filters workaround</dt>
+          <dd>Alt+F3 filters stopped recognising Forever at launch. The <code>anselintegrationtestapp.exe</code> trick going around the forums breaks chat channels. Wait for a driver fix.</dd>
+        </div>
+        <div>
+          <dt>Ray Traced Shadows</dt>
+          <dd>Greyed out for everyone. Blizzard pulled it from the beta on 1 October and the client reports no ray tracing on any card. It isn't your hardware, and forcing the setting does nothing.</dd>
+        </div>
+        <div>
+          <dt>WeakAuras</dt>
+          <dd>No official Forever version. The combat rules from modern WoW stop addons from doing that kind of maths in combat. Use the built-in Cooldown Manager instead.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="builtin" aria-labelledby="builtin-h">
+      <h2 id="builtin-h">Built-in tools worth turning on</h2>
+      <p>Forever ships features that used to need addons. Most are off by default. Tick them off as you go; this page remembers your ticks in this browser.</p>
+      <ul class="checklist" data-store="builtin">
+        <li><label><input type="checkbox" value="preset"> <span><strong>Enhanced preset</strong>: HD models, quest markers on the map, one combined bag and transmog. Options → System → Preset.</span></label></li>
+        <li><label><input type="checkbox" value="cdm"> <span><strong>Cooldown Manager</strong>: Options → Advanced Options. Type <code>/cdm</code> to choose which cooldowns, buffs and trinkets show.</span></label></li>
+        <li><label><input type="checkbox" value="meter"> <span><strong>Damage Meter</strong>: Options → Advanced Options → Enable Damage Meter. Turn on Auto Reset too.</span></label></li>
+        <li><label><input type="checkbox" value="swing"> <span><strong>Swing Timer</strong>: same menu. Worth it for warriors, rogues, hunters and feral druids.</span></label></li>
+        <li><label><input type="checkbox" value="edit"> <span><strong>Edit Mode</strong>: Esc → Edit Mode. Place the meter, cooldowns and frames, then save the layout.</span></label></li>
+        <li><label><input type="checkbox" value="loot"> <span><strong>Auto Loot</strong> under Controls, plus <strong>Instant Quest Text</strong> and <strong>Show Free Bag Space</strong> under Interface.</span></label></li>
+        <li><label><input type="checkbox" value="nav"> <span><strong>In Game Navigation</strong>: an on-screen marker with distance to your tracked quest.</span></label></li>
+        <li><label><input type="checkbox" value="ping"> <span><strong>Ping keybind</strong>: Key Bindings → Ping. Mark targets for your group without typing.</span></label></li>
+        <li><label><input type="checkbox" value="click"> <span><strong>Click Casting</strong> if you heal: Key Bindings → Click Casting.</span></label></li>
+      </ul>
+    </section>
+
+    <section id="addons" aria-labelledby="addons-h">
+      <h2 id="addons-h">Addons</h2>
+      <p>Forever only loads addon files built for it (interface 16001). Classic Era versions show as out of date. Every addon below has a Forever release on CurseForge.</p>
+
+      <table class="addons">
+        <thead><tr><th scope="col">Addon</th><th scope="col">What it does</th><th scope="col">Try</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Questie</th><td>Quest givers, objectives and turn-ins on the map, including quests you haven't picked up. Some brand-new Forever quests are still being added.</td><td><code>/questie</code></td></tr>
+          <tr><th scope="row">Baganator</th><td>All bags in one window with search and categories, plus what your alts carry. Needs Syndicator.</td><td><code>/bgr</code></td></tr>
+          <tr><th scope="row">Leatrix Plus</th><td>Dozens of small fixes: sell junk, auto-repair, faster loot, bigger zoom. Every option starts off. Use the file ending in <code>-forever</code>.</td><td><code>/ltp</code></td></tr>
+          <tr><th scope="row">Leatrix Maps</th><td>Reveals unexplored map areas, shows zone levels and coordinates.</td><td><code>/ltm</code></td></tr>
+          <tr><th scope="row">DungeonJournal</th><td>Maps, quests, bosses and loot for every dungeon in one window. RPG mode hides pages until you clear the dungeon.</td><td><code>/dj</code></td></tr>
+          <tr><th scope="row">Deadly Boss Mods</th><td>Boss timers and warnings, with the Vanilla raid and Forever dungeon modules. Raids open 9 December.</td><td><code>/dbm</code></td></tr>
+          <tr><th scope="row">Auctionator</th><td>Prices in tooltips, shopping lists and quick posting at the Auction House.</td><td>Open the AH</td></tr>
+          <tr><th scope="row">TomTom</th><td>A waypoint arrow. Point it at any coordinate.</td><td><code>/way 45 60</code></td></tr>
+          <tr><th scope="row">GatherMate2</th><td>Remembers every herb, ore and fishing node you find and pins it on the map.</td><td><code>/gathermate</code></td></tr>
+          <tr><th scope="row">ForeverThreat</th><td>Omen-style threat meter made for Forever, with a pull warning. Forever has no built-in threat display.</td><td><code>/ft</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Install or update them</h3>
+      <p>Either pick <strong>WoW Forever</strong> as the game version in the CurseForge app and install each one, or run the script in this repo with the game closed. It fetches each addon's newest Forever file and copies only the folders that load in Forever.</p>
+      <div class="console small">
+        <div class="console-bar"><span>From a clone of this repo, with Python 3 installed</span><button type="button" class="copy" data-copy="#install-cmd">Copy</button></div>
+<pre id="install-cmd"><code>python -I tools/install_addons.py "C:/Program Files (x86)/World of Warcraft/_forever_/Interface/AddOns"</code></pre>
+      </div>
+      <p>Use one addon manager only. Two apps updating the same folder overwrite each other.</p>
+
+      <h3>Worth a look later</h3>
+      <ul class="plain">
+        <li><strong>Platynator</strong> or <strong>Plater</strong> for nameplates you can restyle.</li>
+        <li><strong>EllesmereUI</strong> or <strong>ElvUI</strong> to replace the whole interface. Big change; try the built-in Edit Mode first.</li>
+        <li><strong>RestedXP</strong> for step-by-step levelling routes. The addon is free; the Forever routes are paid.</li>
+        <li><strong>AtlasLoot Classic Forever</strong> for loot tables while planning gear.</li>
+      </ul>
+      <p>Still missing a Forever version: WeakAuras (community forks exist, expect breakage), Postal, OmniCC, Recount.</p>
+    </section>
+
+    <section id="next" aria-labelledby="next-h">
+      <h2 id="next-h">Coming next</h2>
+      <ul class="plain">
+        <li>Profession levelling: the cheapest route from 1 to max for each profession.</li>
+        <li>Class pages: talents, rotations and the gear to chase.</li>
+        <li>Screenshot comparisons of each command, before and after.</li>
+      </ul>
+    </section>
+
+    <section id="sources" aria-labelledby="sources-h">
+      <h2 id="sources-h">Sources</h2>
+      <ul class="sources">
+        <li><a href="https://news.blizzard.com/en-us/article/24302093/carve-a-new-path-with-world-of-warcraft-forever">Blizzard: World of Warcraft: Forever announcement</a></li>
+        <li><a href="https://conquestcapped.com/guides/wow-forever/wow-forever-graphics/">Conquest Capped: graphics settings and FPS costs</a></li>
+        <li><a href="https://www.youtube.com/watch?v=UxARm42S9sk">Jedith: hidden settings video</a></li>
+        <li><a href="https://us.forums.blizzard.com/en/wow/t/ive-managed-to-find-the-perfect-advanced-settings/2378746">Blizzard forums: advanced settings thread</a></li>
+        <li><a href="https://us.forums.blizzard.com/en/wow/t/raytracing-blocked/2352849">Blizzard forums: ray tracing reports "rt:None"</a></li>
+        <li><a href="https://us.forums.blizzard.com/en/wow/t/reshade-post-processing-filter-app-now-blocked-after-7142025-111761965-hotfix-patch/2132149">Blizzard forums: ReShade blocked</a></li>
+        <li><a href="https://eu.forums.blizzard.com/en/wow/t/nvidia-filters-issues-after-release/639724">Blizzard forums: NVIDIA filters after launch</a></li>
+        <li><a href="https://www.nvidia.com/en-us/geforce/news/world-of-warcraft-forever-geforce-rtx-spark-game-ready-driver/">NVIDIA: Forever Game Ready driver</a></li>
+        <li><a href="https://mmonster.co/wow-forever/guides/addons/built-in-features">mmonster: built-in UI tools</a></li>
+        <li><a href="https://hearthproof.com/systems/addons/">Hearthproof: addon status on Forever</a></li>
+        <li><a href="https://timesaver.gg/blog/wow-forever-addons-save-beta-ui-before-launch">timesaver.gg: addons working at launch</a></li>
+        <li><a href="https://www.curseforge.com/wow/addons/dungeonjournal">CurseForge: DungeonJournal</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Fan-made and unofficial. Not affiliated with or endorsed by Blizzard Entertainment. World of Warcraft is a trademark of Blizzard Entertainment.</p>
+    </footer>
+  </main>
+</div>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
