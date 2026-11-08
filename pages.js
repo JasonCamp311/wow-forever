@@ -249,7 +249,7 @@
       inB.forEach(function (s) {
         var lv = s.from === s.to ? s.from : s.from + "–" + s.to;
         var d = s.opts.dungeon && F.dungeons[s.opts.dungeon];
-        html += '<li class="step step-' + s.kind + '" data-reveal><label class="step-check"><input type="checkbox" data-step="' + s.id + '"' + (done.indexOf(s.id) !== -1 ? " checked" : "") + '><span class="sr">Done</span></label>' +
+        html += '<li class="step step-' + s.kind + '"><label class="step-check"><input type="checkbox" data-step="' + s.id + '"' + (done.indexOf(s.id) !== -1 ? " checked" : "") + '><span class="sr">Done</span></label>' +
           '<div class="step-body"><p class="step-meta"><span class="lv">' + lv + "</span>" + kindLabel(s.kind) + "</p>" +
           "<h4>" + s.title + "</h4><p>" + s.html + "</p>" +
           (d ? '<div class="dungeon"><p><strong>' + d.name + "</strong>" + (d.isNew ? ' <span class="new">new</span>' : "") + " · level " + d.lvl + " · " + d.where + "</p>" +
@@ -297,6 +297,8 @@
     $(".xp-level b", bar).textContent = p.level;
     $(".xp-text", bar).textContent = p.n + " / " + p.total + " steps";
   }
+
+  reveal(document); // static frames (picker, explainer) fade in too
 
   if (page === "classes") {
     renderClasses();

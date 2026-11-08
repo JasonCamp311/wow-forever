@@ -190,3 +190,5 @@
   .step { padding: .9rem .8rem; gap: .7rem; }
   .talents td:first-child { white-space: normal; }
 }
+
+.xpbar[hidden] { display: none; }
