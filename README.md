@@ -4,7 +4,9 @@ A fan-made setup guide for World of Warcraft: Forever: hidden graphics commands,
 
 Live at https://jasoncamp311.github.io/wow-forever/
 
-- `index.html`, `style.css`, `app.js`: the page. No build step.
+- `index.html`, `style.css`, `app.js`: the setup page. No build step.
+- `classes.html`, `leveling.html`, `pages.css`, `pages.js`: class guides and the 1–20 leveling guide for every race and class.
+- `guide-data.js`: all class, race, route and addon data both pages render from. Extend a route past 20 by adding steps to `routes` and a bracket to `BRACKETS` in `pages.js`.
 - `tools/install_addons.py`: installs or updates the guide's addon set from CurseForge (game closed):
 
   ```

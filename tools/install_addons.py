@@ -26,6 +26,10 @@ PROJECTS = {
     18808: "TomTom",
     26120: "GatherMate2",
     1704969: "ForeverThreat",
+    4646: "Pawn (upgrade arrows)",
+    1699589: "AtlasLoot Forever (loot tables + BiS)",
+    1715322: "ForeverBiS (BiS lists, dungeon maps)",
+    486246: "RestedXP Guide (free routes to ~20)",
 }
 HEADERS = {"User-Agent": "wow-forever-guide-installer/1.0"}
 

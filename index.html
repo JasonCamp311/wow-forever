@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700;900&family=Alegreya:ital,wght@0,400;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=202611072323">
+<link rel="stylesheet" href="style.css?v=202611072339">
+<link rel="stylesheet" href="pages.css?v=202611072339">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4z' fill='%23ffd479'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -23,9 +24,13 @@
     <li><a href="#avoid"><kbd>2</kbd><span>Skip</span></a></li>
     <li><a href="#builtin"><kbd>3</kbd><span>Built-in</span></a></li>
     <li><a href="#addons"><kbd>4</kbd><span>Addons</span></a></li>
-    <li><a href="#next"><kbd>5</kbd><span>Next</span></a></li>
+    <li><a href="#next"><kbd>5</kbd><span>Guides</span></a></li>
     <li><a href="#sources"><kbd>6</kbd><span>Lore</span></a></li>
   </ol>
+  <ul class="pagelinks">
+    <li><a href="classes.html">Classes</a></li>
+    <li><a href="leveling.html">Leveling 1–20</a></li>
+  </ul>
 </nav>
 
 <header class="hero" id="top">
@@ -180,7 +185,7 @@
     <div class="chapter-head">
       <p class="chapter-num" aria-hidden="true">IV</p>
       <h2 id="addons-h">Addons</h2>
-      <p class="chapter-sub">Forever only loads addon files built for it (interface 16001). Every addon here has a Forever release on CurseForge. Hover a card to inspect it.</p>
+      <p class="chapter-sub">Forever only loads addon files built for it (interface 16001). Every addon here has a Forever release on CurseForge. Hover a card to inspect it. The <a href="leveling.html">leveling guide</a> tells you when to open each one.</p>
     </div>
 
     <div class="loot">
@@ -228,6 +233,31 @@
         <p>Omen-style threat meter made for Forever, with a pull warning. Forever has no built-in threat display.</p>
         <p class="item-use">Use: <code>/ft</code></p>
       </article>
+      <article class="item epic" data-reveal>
+        <h3>ForeverBiS</h3>
+        <p class="item-meta">Binds when installed · Gear</p>
+        <p>Best-in-slot lists for all 28 specs that track what you own, plus loot and quests for every dungeon and the dungeon maps the client lacks.</p>
+        <p class="item-use">Use: <code>/bis</code></p>
+      </article>
+      <article class="item rare" data-reveal>
+        <h3>Pawn</h3>
+        <p class="item-meta">Binds when installed · Gear</p>
+        <p>Green upgrade arrows on tooltips, using a stat scale for your current spec. The fastest way to know whether a quest reward is better.</p>
+        <p class="item-use">Use: <code>/pawn</code></p>
+      </article>
+      <article class="item rare" data-reveal>
+        <h3>AtlasLoot Forever</h3>
+        <p class="item-meta">Binds when installed · Gear</p>
+        <p>Loot tables by boss with BiS tooltips. Plan which dungeon drops your next upgrade.</p>
+        <p class="item-use">Use: <code>/atlasloot</code></p>
+        <p class="item-flavor">"The one by Sliccer. The old AtlasLootClassic has no Forever file."</p>
+      </article>
+      <article class="item rare" data-reveal>
+        <h3>RestedXP Guide</h3>
+        <p class="item-meta">Binds when installed · Leveling</p>
+        <p>Step-by-step route with an arrow. The free route runs to about 20 (Alliance) or 22 (Horde), which pairs with the leveling guide here.</p>
+        <p class="item-use">Use: <code>/rxp</code></p>
+      </article>
       <article class="item uncommon" data-reveal>
         <h3>Leatrix Maps</h3>
         <p class="item-meta">Binds when installed · Maps</p>
@@ -264,8 +294,7 @@
         <ul>
           <li><strong>Platynator</strong> or <strong>Plater</strong> for nameplates you can restyle.</li>
           <li><strong>EllesmereUI</strong> or <strong>ElvUI</strong> to replace the whole interface. Try Edit Mode first.</li>
-          <li><strong>RestedXP</strong> for levelling routes. The addon is free; the Forever routes are paid.</li>
-          <li><strong>AtlasLoot Classic Forever</strong> for loot tables while planning gear.</li>
+          <li><strong>Guidelime</strong> for free leveling routes once RestedXP's free route ends at 20.</li>
         </ul>
       </div>
       <div data-reveal>
@@ -283,11 +312,16 @@
   <section id="next" class="chapter" aria-labelledby="next-h">
     <div class="chapter-head">
       <p class="chapter-num" aria-hidden="true">V</p>
-      <h2 id="next-h">Coming next</h2>
+      <h2 id="next-h">Guides</h2>
+      <p class="chapter-sub">Class guides and a leveling guide for every race and class are up. More to come.</p>
     </div>
-    <ul class="upcoming">
+    <ul class="gateway">
+      <li class="frame" data-reveal><a href="classes.html"><h3>Class guides</h3><p>All nine classes: what each spec does after the 2 November changes, which one to level as, and your talent points for 10–20.</p><span class="go">Open the class guides →</span></a></li>
+      <li class="frame" data-reveal><a href="leveling.html"><h3>Leveling 1–20</h3><p>Pick your race and class for a route from your starting zone, with class quests, dungeons, and the addon to open at each step.</p><span class="go">Plan your 1–20 →</span></a></li>
+    </ul>
+    <ul class="upcoming" style="margin-top:1.4rem">
       <li class="frame" data-reveal><h3>Profession levelling</h3><p>The cheapest route from 1 to max for each profession.</p></li>
-      <li class="frame" data-reveal><h3>Class pages</h3><p>Talents, rotations and the gear to chase.</p></li>
+      <li class="frame" data-reveal><h3>Leveling 20–30</h3><p>The next stretch of every race and class route.</p></li>
       <li class="frame" data-reveal><h3>Before and after</h3><p>Screenshots of each command in Elwynn and the Barrens.</p></li>
     </ul>
   </section>
@@ -327,6 +361,6 @@
 
 <div class="banner" role="status" aria-live="polite"><span class="banner-text"></span></div>
 <div class="fct" aria-hidden="true"></div>
-<script src="app.js?v=202611072323"></script>
+<script src="app.js?v=202611072339"></script>
 </body>
 </html>
