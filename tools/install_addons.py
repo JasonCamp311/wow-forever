@@ -30,6 +30,7 @@ PROJECTS = {
     1699589: "AtlasLoot Forever (loot tables + BiS)",
     1715322: "ForeverBiS (BiS lists, dungeon maps)",
     486246: "RestedXP Guide (free routes to ~20)",
+    1698137: "ForeverWisp (free 1-20 routes)",
 }
 HEADERS = {"User-Agent": "wow-forever-guide-installer/1.0"}
 

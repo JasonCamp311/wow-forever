@@ -10,6 +10,7 @@ window.FOREVER = (function () {
   var addons = {
     questie:   { name: "Questie", cmd: "/questie", q: "legendary", installed: true, what: "quest givers and objectives on the map. Some new Forever quests are still missing, so trust quest text over a missing marker." },
     rxp:       { name: "RestedXP Guide", cmd: "/rxp", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/restedxp-guide", what: "step-by-step route with an arrow. The free route covers about 1–20 (Alliance) and 1–22 (Horde); the Forever routes after that are paid." },
+    wisp:      { name: "ForeverWisp", cmd: "/wisp", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/foreverwisp", what: "free 1–20 route for all eight starts, including Horde Skyborne, with an arrow, class quests and talent picks." },
     guidelime: { name: "Guidelime", cmd: "/lime", q: "rare", url: "https://www.curseforge.com/wow/addons/guidelime", what: "free alternative to RestedXP if you'd rather not pay for routes past 20." },
     dj:        { name: "DungeonJournal", cmd: "/dj", q: "epic", installed: true, what: "bosses, quests and loot for every dungeon. Turn on RPG mode if you want pages to unlock as you clear." },
     bis:       { name: "ForeverBiS", cmd: "/bis", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/foreverbis", what: "BiS lists for all 28 specs, quest chains per dungeon, and dungeon maps (the Forever client has none)." },
@@ -62,7 +63,7 @@ window.FOREVER = (function () {
 
   /* ------------------------------------------------------------------ routes: one per starting area
      step: [fromLevel, toLevel, title, html, use[], opts]   use = addon ids or [id, command] */
-  var setup = [1, 1, "Before you take a step", "Turn on Questie and the RestedXP free route (or Guidelime), set your Pawn scale, and turn on Auto Loot. Grab the first quest that hands out a <strong>gathering manual</strong>: it teaches Mining, Herbalism or Skinning without a trainer. Pick one gathering profession now and sell the mats with Auctionator.", ["questie", "rxp", "pawn", "gather"], { kind: "setup" }];
+  var setup = [1, 1, "Before you take a step", "Turn on Questie and a route addon: ForeverWisp is free to 20 for every start (RestedXP's free route works too). Set your Pawn scale, and turn on Auto Loot. Grab the first quest that hands out a <strong>gathering manual</strong>: it teaches Mining, Herbalism or Skinning without a trainer. Pick one gathering profession now and sell the mats with Auctionator.", ["questie", "wisp", "rxp", "pawn", "gather"], { kind: "setup" }];
 
   var routes = {
     northshire: { name: "Northshire Abbey → Elwynn → Westfall", faction: "Alliance", steps: [
@@ -119,23 +120,27 @@ window.FOREVER = (function () {
     ]}
   };
 
+  /* Zephras Isle: checked against ForeverWisp's Horde Skyborne 1–20 route (updated 5 Nov 2026) */
   var zephrasCore = [
     setup,
-    [1, 4, "Zephras Isle: Thendal Village", "Start with <strong>Coming of Age</strong>. <strong>Harvesting Windstones</strong> gives the gathering manual. Windstones on the island work as free health and mana potions, and only here.", ["questie"]],
-    [4, 8, "Shen'dar Village", "Constable Aonda's hub. <em>Falling With Style</em> teaches you to use Walk on Air; <em>The Cirrusfly Queen</em>; <em>The Great Outdoors</em> introduces camping (campfires make you rested). Ride tornadoes for a 40% speed buff.", ["questie", "rxp"]],
-    [8, 12, "Falaath Village to Valanaar", "<em>Foul Matriarch</em> and <em>Aggressive Encroachment</em> are in the bear cave: group up for it. Then Infiltrating the Cult, Catching Wind, Tower Defense, The Turncoat, and <em>Confront Lorthuna</em> to finish. Valanaar has trainers, a bank and an auction house.", ["questie", "rxp"], { verify: "Most sources say you leave at 12; one says 13." }]
+    [1, 4, "Zephras Isle: Thendal Grove", "Ailee Farheart starts you with <strong>Coming of Age</strong>. Clear the vuldren and cirrusflies, then the Cirrusfly Queen. For <em>Falling With Style</em>, put Walk on Air on your bar, jump off the Thendal watchtower and use it while falling. <strong>Harvesting Windstones</strong> from Dalia the Collector gives the gathering manual. Windstones work as free health and mana potions, but only on the island.", ["questie", "wisp", ["tomtom", "/way Zephras Isle 42.1 23.5"]]],
+    [4, 6, "The ursera dens", "Aetheen of the Gales sends you west: <em>Foul Matriarch</em> (Urs'anah, inside her den) and <em>Aggressive Encroachment</em>. On the way south, do Al'Aketh Thugs at the temple ruins for Hanaa Nightwind.", ["questie", "wisp"]],
+    [5, 8, "Shen'dar Village", "Constable Aonda's hub. At Raan Wildwind's campfire, <em>The Great Outdoors</em> teaches camping: /sit for Boosted Rest. He also offers <em>Camping 101</em> for Mining, Cooking and Herbalism. Clear the hippogryph nests and the bandit cave, then infiltrate Falaath Village with the Mark of Akir. Keep the mark; Sania Silverstream replaces it if you lose it. Vulgara the Insatiable is an optional level 8 elite: group up or skip her. Tornadoes give a 40% speed buff.", ["questie", "wisp", ["tomtom", "/way Zephras Isle 45.3 45.3"]]]
   ];
   routes.zephrasA = { name: "Zephras Isle → Stormwind → Westfall", faction: "Alliance", steps: zephrasCore.concat([
-    [12, 12, "Leave the island", "Skycutter from Valanaar's east dock to Dalaran, then the Skyborne portal in the Sky Enclave to Stormwind. Bolvar gives <strong>Journey to Sentinel Hill</strong>.", ["rxp"], { verify: "Dalaran's Skyborne-only portal: one source." }],
+    [8, 12, "Valanaar", "Set your hearth at the inn. Finish the island story from the council tower, ending with <em>Confront Lorthuna</em>. Valanaar has trainers, a bank and an auction house.", ["questie", "wisp"], { verify: "Most sources say you leave at 12; one says 13." }],
+    [12, 12, "Leave the island", "Skycutter from Valanaar's east dock to Dalaran, then the Skyborne portal in the Sky Enclave to Stormwind. Bolvar gives <strong>Journey to Sentinel Hill</strong>.", ["wisp"], { verify: "Dalaran's Skyborne-only portal: one source." }],
     [12, 15, "Westfall: Sentinel Hill", "You arrive a couple of levels ahead of the zone, which is fine. Grab every Deadmines quest.", ["questie"]],
     [14, 17, "Loch Modan and the Hall of Thanes", "Optional: tram to Ironforge, Loch Modan, and the new Hall of Thanes.", ["dj", "bis"], { dungeon: "thanes" }],
-    [16, 20, "Darkshore, Redridge, then Ashenvale", "Take the boat to Darkshore, come back for Redridge, and finish in Ashenvale near 20. Do the Deadmines on the way.", ["questie", "rxp", "dj"], { dungeon: "vc" }]
+    [16, 20, "Darkshore, Redridge, then Ashenvale", "Take the boat to Darkshore, come back for Redridge, and finish in Ashenvale near 20. Do the Deadmines on the way.", ["questie", "wisp", "dj"], { dungeon: "vc" }]
   ])};
-  routes.zephrasH = { name: "Zephras Isle → Kalimdor → The Barrens", faction: "Horde", steps: zephrasCore.concat([
-    [12, 12, "Leave the island", "Skycutter from Valanaar's Horde dock to Mulgore. <em>Exploring the Horde</em> takes you through the capitals and ends with Sylvanas in the Undercity.", [["tomtom", "/way Zephras Isle 58.1 80.3"]], { verify: "Landing point: Skywatcher Plateau or Thunder Bluff, depending on source." }],
-    [12, 16, "Silverpine or the Barrens", "Since you finish in the Undercity, Silverpine (The Sepulcher) is the shortest hop; the Barrens works too. No one has published a full Horde Skyborne route yet.", ["questie", "rxp"]],
-    [15, 18, "Ruins of Lordaeron (new)", "Right above the Undercity. Grab the Brill and Apothecarium quests first.", ["dj", "bis", "dbm"], { dungeon: "ruins" }],
-    [17, 20, "Wailing Caverns or Ragefire Chasm", "Then keep questing in the Barrens.", ["dj"], { dungeon: "wc" }]
+  routes.zephrasH = { name: "Zephras Isle → Brill → Silverpine → The Barrens", faction: "Horde", steps: zephrasCore.concat([
+    [8, 12, "Valanaar", "Set your hearth with Donaal Downbreeze at the inn. Report to the upper council room, then to Ayessa Dawnsinger in the Windshaper lodge. Work Aamelia's Windfield Orchard to the west. Riaani's <em>Broken Construct</em> needs three parts: inside Shriekling Den (enter from the south), underwater in Windsong Lake, and by the campfire at the far end of the bandit valley. Then the Strange Hermit, Yorana's eastern watchtower, the turncoat and the Shrine of Akir, ending with Lorthuna.", ["questie", "wisp", ["tomtom", "/way Zephras Isle 62.2 72.6"]], { verify: "Most sources say you leave at 12; one says 13." }],
+    [12, 12, "Skycutter to Mulgore, then walk to Orgrimmar", "Take the skycutter from Valanaar's Horde dock to Alaana Stormwalker in Mulgore. Walk through the Crossroads and Razor Hill to Thrall in Orgrimmar, picking up every flight path. In Orgrimmar, choose the reward for Meal Appeal before Favorite Food, and Favorite Food before Rocks to Rests.", ["wisp", ["tomtom", "/way Zephras Isle 58.1 80.3"]], { verify: "ForeverWisp lands you in Mulgore; some guides say Thunder Bluff." }],
+    [12, 14, "Zeppelin to Tirisfal: Brill", "Take the zeppelin from Orgrimmar. Brill has the Argent assignments and your Silverpine pickups. Grab <em>The Wrath of Rath'mael</em> for the Ruins of Lordaeron while you're in town.", ["questie", "wisp"]],
+    [13, 16, "Silverpine Forest and the Undercity", "Work from The Sepulcher; Deathstalker Erland's escort ends at Rane Yorick. Pick up <em>A Frightened Request</em> from Tabitha Heartweaver for the Ruins, and the Apothecarium quests in the Undercity.", ["questie", "wisp", ["tomtom", "/way Silverpine Forest 43 41"]]],
+    [15, 18, "Ruins of Lordaeron (new)", "Right above the Undercity, and you'll have all its quests by now.", ["dj", "bis", "dbm"], { dungeon: "ruins" }],
+    [16, 20, "Back to the Barrens", "Zeppelin to Durotar, then the Crossroads. Work through the Barrens, finishing in Stonetalon Mountains and Ratchet around 20. Wailing Caverns from about 17.", ["questie", "wisp", "dj"], { dungeon: "wc" }]
   ])};
 
   /* ------------------------------------------------------------------ classes */
@@ -169,7 +174,7 @@ window.FOREVER = (function () {
       talents: { exact: false, rows: [["10–20", "Deadly Aspects first (more damage than Endurance Training), then Pathfinding (moved to row 3) and Improved Revive Pet."], ["25", "Summon Hawk (the 16-point talent), then toward Bestial Wrath."]] },
       races: [["orc", "Command: +5% pet damage."], ["dwarf", "Big Game Hunter and +1% hit."], ["troll", "Beast Slaying and Berserking."], ["nightelf", "Shadowmeld and run speed."]],
       milestones: [
-        [10, "Taming the Beast", "Tame three beasts with the Taming Rod, then pick your pet. Humans have their own set: Rockhide Boar, Gray Forest Wolf, Young Forest Bear.", ["questie"]],
+        [10, "Taming the Beast", "Tame three beasts with the Taming Rod, then pick your pet. Open with Concussive Shot from max range before each tame: the channel takes 10 seconds and you can't fight back. Humans have their own set: Rockhide Boar, Gray Forest Wolf, Young Forest Bear.", ["questie"]],
         [20, "Aimed Shot and Aspect of the Cheetah", "Both at 20. Cheetah halves your travel time until 40. Traps now work in combat and share a 30-second cooldown.", []]
       ] },
     rogue: { name: "Rogue", color: "#fff468",
@@ -257,6 +262,14 @@ window.FOREVER = (function () {
       [3, "Earth totem on the island", "Windshaper Boro in Thendal gives it at level 3.", ["questie"], null, 4],
       [10, "Fire totem on the island", "Aarnor Galestrike in Shen'dar, then Olariaan Swiftburn, ending in a timed torch run to Valanaar. Do it before you leave at 12.", ["questie"]],
       [20, "Water totem", "Reportedly uses the Horde chain through Brine near Ratchet.", ["questie"], "Sources disagree on the Skyborne Water quest."]
+    ],
+    "skyH-hunter": [
+      [1, "The Way of the Hunter", "Rorian sends you to Tai'ree Farsight in the middle of Thendal Grove, your first Hunter trainer.", [["tomtom", "/way Zephras Isle 42.5 23.7"]]],
+      [10, "Taming the Beast in Valanaar", "Quel'ana Quickgale on the west side of Valanaar hands you three Taming Rods in turn: a <strong>Windsong Crawler</strong> in the water just north of town, an <strong>Ornery Galestrider</strong> in the Gustberry Lowlands, then a <strong>Vuldren Alpha</strong> just outside Valanaar. Open with Concussive Shot from max range, then channel the rod; you can't fight back for 10 seconds. Finish with <em>Training the Beast</em> from Quel'dora beside her, then tame your own pet.", [["tomtom", "/way Zephras Isle 59.6 72.6"]]]
+    ],
+    "skyA-hunter": [
+      [1, "The Way of the Hunter", "Rorian sends you to Tai'ree Farsight in the middle of Thendal Grove, your first Hunter trainer.", [["tomtom", "/way Zephras Isle 42.5 23.7"]]],
+      [10, "Taming the Beast in Valanaar", "Quel'ana Quickgale on the west side of Valanaar hands you three Taming Rods in turn: a <strong>Windsong Crawler</strong> in the water just north of town, an <strong>Ornery Galestrider</strong> in the Gustberry Lowlands, then a <strong>Vuldren Alpha</strong> just outside Valanaar. Open with Concussive Shot from max range, then channel the rod; you can't fight back for 10 seconds. Finish with <em>Training the Beast</em> from Quel'dora beside her, then tame your own pet.", [["tomtom", "/way Zephras Isle 59.6 72.6"]]]
     ],
     "skyA-warrior": [[10, "The Skybreaker Bulwark", "Your Defensive Stance quest is on the island, from Seena Skybreaker.", ["questie"]]],
     "skyH-warrior": [[10, "The Skybreaker Bulwark", "Your Defensive Stance quest is on the island, from Seena Skybreaker.", ["questie"]]],

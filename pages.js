@@ -319,7 +319,7 @@
     // addon loadout: every addon this guide calls for
     var used = {};
     steps.forEach(function (s) { s.use.forEach(function (u) { used[typeof u === "string" ? u : u[0]] = 1; }); });
-    ["questie", "rxp", "pawn", "dj", "bis", "atlas"].forEach(function (k) { used[k] = 1; });
+    ["questie", "wisp", "pawn", "dj", "bis", "atlas"].forEach(function (k) { used[k] = 1; });
     var loadout = Object.keys(used).map(function (k) {
       var a = F.addons[k];
       return '<li class="q-' + a.q + '"><strong>' + a.name + "</strong>" + (a.cmd ? " <code>" + a.cmd + "</code>" : "") +
