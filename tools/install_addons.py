@@ -14,6 +14,7 @@ FOREVER_INTERFACE = "16001"
 
 PROJECTS = {
     334372: "Questie",
+    1696795: "QuestieDB (Questie's quest data; Questie shows nothing without it)",
     914482: "Baganator",
     988370: "Syndicator (Baganator needs it)",
     94855: "Leatrix Plus",
@@ -105,6 +106,34 @@ def main():
                     shutil.copytree(src, dst)
                     installed.append(folder)
             print(f"{label}: {f['displayName']} -> {', '.join(installed) or 'nothing for Forever'}")
+    missing = missing_dependencies(addons_dir)
+    for addon, dep in missing:
+        print(f"WARNING: {addon} needs {dep}, which is not installed. Add its CurseForge project to PROJECTS.")
+    if not missing:
+        print("Dependency check: every RequiredDeps/Dependencies entry is installed.")
+
+
+def missing_dependencies(addons_dir):
+    """Required dependencies named in .toc files that have no folder in AddOns.
+    CurseForge's app installs these automatically; this script only installs what PROJECTS lists."""
+    present = {name.lower() for name in os.listdir(addons_dir)}
+    missing = []
+    for folder in sorted(os.listdir(addons_dir)):
+        path = os.path.join(addons_dir, folder)
+        if not os.path.isdir(path):
+            continue
+        for name in os.listdir(path):
+            if not name.lower().endswith(".toc"):
+                continue
+            with open(os.path.join(path, name), encoding="utf-8", errors="ignore") as fh:
+                for line in fh:
+                    key, _, value = line.partition(":")
+                    if key.strip().lower() in ("## requireddeps", "## dependencies", "## dep"):
+                        for dep in value.split(","):
+                            dep = dep.strip()
+                            if dep and dep.lower() not in present and (folder, dep) not in missing:
+                                missing.append((folder, dep))
+    return missing
 
 
 if __name__ == "__main__":

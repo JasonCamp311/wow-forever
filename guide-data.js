@@ -8,7 +8,7 @@ window.FOREVER = (function () {
 
   /* ------------------------------------------------------------------ addons */
   var addons = {
-    questie:   { name: "Questie", cmd: "/questie", q: "legendary", installed: true, what: "quest givers and objectives on the map. Some new Forever quests are still missing, so trust quest text over a missing marker." },
+    questie:   { name: "Questie", cmd: "/questie", q: "legendary", installed: true, what: "quest givers and objectives on the map. Needs the separate QuestieDB addon, which holds the quest data. Some new Forever quests are still missing, so trust quest text over a missing marker." },
     rxp:       { name: "RestedXP Guide", cmd: "/rxp", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/restedxp-guide", what: "step-by-step route with an arrow. The free route covers about 1–20 (Alliance) and 1–22 (Horde); the Forever routes after that are paid." },
     wisp:      { name: "ForeverWisp", cmd: "/wisp", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/foreverwisp", what: "free 1–20 route for all eight starts, including Horde Skyborne, with an arrow, class quests and talent picks." },
     guidelime: { name: "Guidelime", cmd: "/lime", q: "rare", url: "https://www.curseforge.com/wow/addons/guidelime", what: "free alternative to RestedXP if you'd rather not pay for routes past 20." },
