@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forever Professions</title>
+<meta name="description" content="WoW Forever professions: which pair to take for each class, what changed, camp objects and cheap leveling routes.">
+<meta name="theme-color" content="#0a1220">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700;900&family=Alegreya:ital,wght@0,400;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=202611080008">
+<link rel="stylesheet" href="pages.css?v=202611080008">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4z' fill='%23ffd479'/%3E%3C/svg%3E">
+</head>
+<body data-page="professions" class="subpage">
+<a class="skip" href="#main">Skip to the guide</a>
+<nav class="actionbar shown" aria-label="Pages">
+  <a href="index.html" class="brand"><span class="brand-star" aria-hidden="true"></span><span class="brand-text">Forever Field Guide</span></a>
+  <ul class="pagelinks">
+    <li><a href="index.html">Setup</a></li>
+    <li><a href="classes.html">Classes</a></li>
+    <li><a href="professions.html" aria-current="page">Professions</a></li>
+    <li><a href="leveling.html">Leveling<span class="long"> 1–20</span></a></li>
+  </ul>
+</nav>
+
+<header class="pagehead">
+  <p class="hero-kicker">Nine primary, three secondary</p>
+  <h1 class="title"><span class="title-line">Professions</span></h1>
+  <p class="lede">Which two professions to take for your class, what Forever changed, and the cheap way to level each one.</p>
+</header>
+<main id="main">
+  <section class="chapter tight">
+    <div class="frame explainer" data-reveal>
+      <h2>How professions work in Forever</h2>
+      <ul>
+        <li>Two primary professions, plus Cooking, First Aid and Fishing for free. No new professions; the cap is still 300.</li>
+        <li>Your first quest in every starting zone hands out a <strong>gathering manual</strong>, so you can start Mining, Herbalism or Skinning without a trainer.</li>
+        <li>Ranks now need a character level too. Gathering opens earlier so you can farm while leveling.</li>
+        <li><strong>Cooking matters for leveling:</strong> every cooked meal gives +5% XP from kills for 15 minutes.</li>
+        <li><strong>First Aid now makes healing potions</strong>, from Peacebloom, Briarthorn and Bruiseweed.</li>
+        <li>Over 600 new recipes. Many leveling crafts are <strong>bind on pickup</strong>, so you only get them by having the profession.</li>
+        <li>No passive bonuses: Mining no longer gives Stamina, and Skinning no longer gives crit.</li>
+        <li>A new reagent bag slot. Tailors make the bags (6 and 12 slots).</li>
+        <li>Waylaid Supplies crates return. Turn them in for Merchant's Favor, which buys recipes and profession titles.</li>
+        <li>Every profession has <strong>camp objects</strong> that buff your group for an hour. Tier 1 comes at skill 20 from the starting-zone <em>Camping 101</em> quest. Tiers 2 and 3 come from blueprints dropped by dungeon bosses.</li>
+        <li>Reaching 150, 225 and 300 can earn account-wide Legacy points. <span class="verify">Sources disagree on whether gathering professions count.</span></li>
+      </ul>
+      <table class="talents ranks">
+        <thead><tr><th scope="col">Rank</th><th scope="col">Skill cap</th><th scope="col">Crafting opens</th><th scope="col">Gathering opens</th></tr></thead>
+        <tbody>
+          <tr><td>Apprentice</td><td>75</td><td>level 5</td><td>level 1</td></tr>
+          <tr><td>Journeyman</td><td>150</td><td>level 10</td><td>any level</td></tr>
+          <tr><td>Expert</td><td>225</td><td>level 20</td><td>level 10</td></tr>
+          <tr><td>Artisan</td><td>300</td><td>level 35</td><td>level 25</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chapter-head small-head"><h2>Pick your pair</h2><p class="chapter-sub">Level with your armor crafter and the gatherer that feeds it, then swap one at 60 if your role wants something else. Gnomes lean Engineering (20% fewer backfires) and Tauren lean Herbalism (Cultivation).</p></div>
+    <div class="frame" style="padding:1rem 1.6rem" id="pairs" data-reveal></div>
+    <p class="note" style="text-align:center">Want gold more than gear? Take two gatherers in launch week: the auction house starts empty, and Mining + Herbalism has the most buyers. Sell with Auctionator.</p>
+
+    <div id="proflist"></div>
+  </section>
+  <footer>
+    <p>Checked against Blizzard, Wowhead, Icy Veins and Warcraft Tavern on <span class="updated"></span>. Forever is a week old and Blizzard is still tuning it; anything marked "verify in game" disagreed between sources.</p>
+    <p>Fan-made and unofficial. Not affiliated with or endorsed by Blizzard Entertainment. World of Warcraft is a trademark of Blizzard Entertainment.</p>
+  </footer>
+</main>
+<div class="banner" role="status" aria-live="polite"><span class="banner-text"></span></div>
+<div class="fct" aria-hidden="true"></div>
+<script src="guide-data.js?v=202611080008"></script>
+<script src="build-data.js?v=202611080008"></script>
+<script src="pages.js?v=202611080008"></script>
+</body>
+</html>

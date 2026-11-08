@@ -82,7 +82,8 @@
   /* ---------------- scroll reveal ---------------- */
   function reveal(root) {
     var els = (root || document).querySelectorAll("[data-reveal]:not(.in)");
-    if (!("IntersectionObserver" in window) || reduceMotion) { els.forEach(function (el) { el.classList.add("in"); }); return; }
+    /* guide pages show everything immediately (see pages.css); scroll-reveal hid content twice */
+    if (true) { els.forEach(function (el) { el.classList.add("in"); }); return; }
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); } });
     }, { rootMargin: "0px 0px -6% 0px" });
@@ -109,7 +110,8 @@
       var raceLinks = allRaces.map(function (r) {
         return '<a class="race-link" href="leveling.html#' + r + "-" + k + '">' + raceName(r) + (F.races[r].newCombo.indexOf(k) !== -1 ? ' <span class="new">new</span>' : "") + "</a>";
       }).join("");
-      var picks = c.races.map(function (r) { return "<li><strong>" + raceName(r[0]) + "</strong>: " + r[1] + "</li>"; }).join("");
+      var picks = tierList(k);
+      var profs = profBlock(c);
       var spells = c.milestones.map(function (m) { return "<li><span class=\"lv\">" + m[0] + "</span> <strong>" + m[1] + "</strong>: " + m[2] + "</li>"; }).join("");
       return '<article class="frame classcard" id="' + k + '" style="--cc:' + c.color + '" data-reveal>' +
         '<header class="classcard-head"><h2>' + c.name + '</h2><p class="roles">' + uniqueRoles(c) + "</p></header>" +
@@ -121,14 +123,100 @@
           "</section>" +
           "<section><h3>At level 60</h3><p>" + c.endgame + "</p>" +
             "<h3>Class milestones to 20</h3><ul class=\"miles\">" + spells + "</ul>" +
-            "<h3>Races that suit it</h3><ul class=\"picks\">" + picks + "</ul>" +
           "</section>" +
+        "</div>" +
+        '<div class="classcard-grid build-grid">' +
+          "<section><h3>Best races</h3><ul class=\"tiers\">" + picks + "</ul></section>" +
+          "<section><h3>Professions</h3>" + profs + "</section>" +
         "</div>" +
         '<footer class="classcard-foot"><span>1–20 guide for:</span> ' + raceLinks + "</footer>" +
       "</article>";
     }).join("");
     reveal(out);
   }
+  /* ---------------- races, tiers and professions (build-data.js) ---------------- */
+  function tierBadge(t) { return '<span class="tier tier-' + t + '">' + F.TIER[t] + "</span>"; }
+  function sortedTiers(cls) {
+    var t = F.classes[cls].tiers;
+    return Object.keys(t).sort(function (a, b) { return t[b][0] - t[a][0]; });
+  }
+  function tierList(cls, current) {
+    var t = F.classes[cls].tiers;
+    return sortedTiers(cls).map(function (r) {
+      return '<li class="tier-row' + (r === current ? " is-current" : "") + '">' + tierBadge(t[r][0]) +
+        ' <a href="leveling.html#' + r + "-" + cls + '">' + raceName(r) + "</a>" +
+        '<span class="faction-dot ' + F.races[r].faction.toLowerCase() + '" title="' + F.races[r].faction + '"></span>' +
+        "<span class=\"why\">" + t[r][1] + "</span></li>";
+    }).join("");
+  }
+  function profLink(id) {
+    var p = F.professions[id];
+    return '<a class="prof prof-' + p.type + '" href="professions.html#' + id + '"><span aria-hidden="true">' + p.icon + "</span> " + p.name + "</a>";
+  }
+  function profPair(ids) { return ids.map(profLink).join('<span class="plus">+</span>'); }
+  function profBlock(c, race) {
+    var P = c.profs;
+    var html = '<p class="pair-label">Level with</p><p class="pair">' + profPair(P.level) + "</p><p>" + P.levelWhy + "</p>" +
+      '<p class="pair-label">At 60</p><ul class="endpairs">' + P.end.map(function (e) {
+        return "<li><strong>" + e[0] + ":</strong> " + profPair(e[1]) + "<br><span>" + e[2] + "</span></li>";
+      }).join("") + "</ul>";
+    if (race && F.raceProf[race]) html += '<p class="racenote"><strong>' + F.races[race].name + " bonus:</strong> " + F.raceProf[race][1] + " Worth taking " + profLink(F.raceProf[race][0]) + " if it fits.</p>";
+    return html;
+  }
+
+  function renderMatrix() {
+    var box = $("#matrix");
+    if (!box) return;
+    var raceKeys = ["human", "dwarf", "gnome", "nightelf", "skyA", "orc", "undead", "tauren", "troll", "skyH"];
+    var head = raceKeys.map(function (r) {
+      var R = F.races[r];
+      return '<th scope="col" class="' + R.faction.toLowerCase() + '">' + (R.short ? R.short + "<small>" + (R.faction === "Alliance" ? "Alliance" : "Horde") + "</small>" : R.name) + "</th>";
+    }).join("");
+    var rows = Object.keys(F.classes).map(function (c) {
+      var C = F.classes[c];
+      return '<tr><th scope="row" style="color:' + C.color + '"><a href="#' + c + '" style="color:inherit">' + C.name + "</a></th>" + raceKeys.map(function (r) {
+        var t = C.tiers[r];
+        if (!t) return '<td class="nope" aria-label="not available">·</td>';
+        return '<td><a class="cell tier-' + t[0] + '" href="leveling.html#' + r + "-" + c + '" title="' + esc(F.races[r].name + " " + C.name + ": " + F.TIER[t[0]] + ". " + t[1]) + '">' +
+          "★★★".slice(0, t[0]) + '<span class="sr">' + F.TIER[t[0]] + "</span></a></td>";
+      }).join("") + "</tr>";
+    }).join("");
+    box.innerHTML = '<div class="matrix-scroll"><table class="matrix"><thead><tr><td></td>' + head + "</tr></thead><tbody>" + rows + "</tbody></table></div>" +
+      '<p class="legend"><span class="cell tier-3">★★★</span> Top pick <span class="cell tier-2">★★</span> Strong <span class="cell tier-1">★</span> Fine · <span class="nope">·</span> not available. Click a cell for its 1–20 guide; hover for the reason.</p>';
+  }
+
+  /* =================================================================== professions page */
+  function renderProfessions() {
+    var byClass = Object.keys(F.classes).map(function (k) {
+      var C = F.classes[k], P = C.profs;
+      return '<tr><th scope="row" style="color:' + C.color + '"><a href="classes.html#' + k + '" style="color:inherit">' + C.name + "</a></th>" +
+        "<td>" + profPair(P.level) + '<br><span class="why">' + P.levelWhy + "</span></td>" +
+        "<td>" + P.end.map(function (e) { return "<div><strong>" + e[0] + ":</strong> " + profPair(e[1]) + "</div>"; }).join("") + "</td></tr>";
+    }).join("");
+    $("#pairs").innerHTML = '<table class="pairs"><thead><tr><th scope="col">Class</th><th scope="col">Level with</th><th scope="col">At 60</th></tr></thead><tbody>' + byClass + "</tbody></table>";
+
+    var groups = [["gather", "Gathering"], ["craft", "Crafting"], ["secondary", "Secondary: take all three"]];
+    $("#proflist").innerHTML = groups.map(function (g) {
+      var ids = Object.keys(F.professions).filter(function (id) { return F.professions[id].type === g[0]; });
+      return '<h3 class="group-h">' + g[1] + '</h3><div class="profcards">' + ids.map(function (id) {
+        var p = F.professions[id];
+        var users = Object.keys(F.classes).filter(function (c) {
+          var P = F.classes[c].profs; return P.level.indexOf(id) !== -1 || P.end.some(function (e) { return e[1].indexOf(id) !== -1; });
+        });
+        return '<article class="frame profcard prof-' + p.type + '" id="' + id + '" data-reveal>' +
+          '<h4><span aria-hidden="true">' + p.icon + "</span> " + p.name + "</h4>" +
+          '<p class="makes">' + p.makes + "</p><p>" + p.why + "</p>" +
+          (p.forever.length ? '<p class="pair-label">New in Forever</p><ul>' + p.forever.map(function (f) { return "<li>" + f + "</li>"; }).join("") + "</ul>" : "") +
+          '<p class="pair-label">Camp objects</p><p class="camp"><span>' + p.camp[0] + "</span> → <span>" + p.camp[1] + "</span> → <span>" + p.camp[2] + '</span><br><em>' + p.camp[3] + "</em></p>" +
+          (p.route ? '<p class="pair-label">Cheap route</p><table class="talents"><tbody>' + p.route.map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("") + "</tbody></table>" : "") +
+          (users.length ? '<p class="users">Suggested for: ' + users.map(function (c) { return '<a href="classes.html#' + c + '" style="color:' + F.classes[c].color + '">' + F.classes[c].name + "</a>"; }).join(", ") + "</p>" : "") +
+          (p.verify ? '<p class="verify">Verify in game: ' + p.verify + "</p>" : "") +
+          "</article>";
+      }).join("") + "</div>";
+    }).join("");
+    reveal($("#proflist"));
+  }
+
   function uniqueRoles(c) {
     var seen = {};
     c.specs.forEach(function (s) { s[1].split(" ").forEach(function (r) { seen[r] = 1; }); });
@@ -171,8 +259,9 @@
     box.innerHTML = race.classes.map(function (c) {
       var cl = F.classes[c];
       return '<button type="button" class="pick pick-class" style="--cc:' + cl.color + '" data-class="' + c + '" aria-pressed="' + (c === state.cls) + '">' +
-        cl.name + (race.newCombo.indexOf(c) !== -1 ? ' <span class="new">new</span>' : "") + "</button>";
-    }).join("");
+        cl.name + (race.newCombo.indexOf(c) !== -1 ? ' <span class="new">new</span>' : "") +
+        '<span class="pickstars tier-' + cl.tiers[state.race][0] + '" title="' + F.TIER[cl.tiers[state.race][0]] + '">' + "★★★".slice(0, cl.tiers[state.race][0]) + "</span></button>";
+    }).join("") + '<p class="hint">Stars show how well this race suits each class: ★★★ top pick, ★★ strong, ★ fine. Full grid on the <a href="classes.html">class page</a>.</p>';
   }
 
   function buildSteps(race, cls) {
@@ -193,6 +282,14 @@
     });
     F.common.forEach(function (m, i) {
       steps.push({ id: "g" + i, from: m[0], to: m[0], title: m[1], html: m[2], use: m[3] || [], opts: {}, kind: "gear", order: 2 });
+    });
+    var P = C.profs, nudge = F.raceProf[race];
+    F.profSteps.forEach(function (m, i) {
+      var html = m[2].replace("{class}", C.name)
+        .replace("{p1}", F.professions[P.level[0]].name).replace("{p2}", F.professions[P.level[1]].name)
+        .replace("{why}", P.levelWhy)
+        .replace("{race}", nudge ? "As a " + R.name + ", " + F.professions[nudge[0]].name + " is worth a look: " + nudge[1] : "");
+      steps.push({ id: "p" + i, from: m[0], to: m[0], title: m[1], html: html, use: m[3] || [], opts: {}, kind: "prof", order: 1.5 });
     });
     steps.sort(function (a, b) {
       if (a.kind === "setup") return -1; if (b.kind === "setup") return 1;
@@ -239,6 +336,7 @@
         "<section><h3>Level as " + C.level + ' <a class="small" href="classes.html#' + cls + '">class guide</a></h3><p>' + C.levelWhy + "</p>" +
           '<table class="talents"><tbody>' + talentRows + "</tbody></table></section>" +
       "</div></div>" +
+      buildCard(race, cls) +
       '<details class="frame loadout" data-reveal open><summary>Addon loadout for this guide</summary><ul>' + loadout + "</ul>" +
       '<p class="note">Missing ones install with <code>tools/install_addons.py</code> on the <a href="index.html#addons">main page</a>, or from CurseForge with WoW Forever selected.</p></details>';
 
@@ -282,8 +380,20 @@
     boxes.forEach(function (b) { b.addEventListener("change", function () { sync(true, b); }); });
     sync(false);
   }
+  function buildCard(race, cls) {
+    var C = F.classes[cls], t = C.tiers[race];
+    var tops = sortedTiers(cls).filter(function (r) { return C.tiers[r][0] === 3 && r !== race; });
+    var verdict = t[0] === 3 ? "One of the best races for a " + C.name + "." :
+      "A solid pick. The top picks for " + C.name + " are " + tops.map(function (r) { return '<a href="#' + r + "-" + cls + '">' + raceName(r) + "</a>"; }).join(", ") + ".";
+    return '<div class="frame buildcard" style="--cc:' + C.color + '" data-reveal><h3>Your build</h3><div class="guide-grid">' +
+      "<section><p class=\"pair-label\">Race fit</p><p>" + tierBadge(t[0]) + " " + t[1] + "</p><p>" + verdict + "</p>" +
+        '<details><summary>Every race for ' + C.name + "</summary><ul class=\"tiers\">" + tierList(cls, race) + "</ul></details></section>" +
+      "<section>" + profBlock(C, race) +
+        '<p class="note">' + F.goldPair[2] + "</p></section>" +
+      "</div></div>";
+  }
   function kindLabel(k) {
-    return { setup: '<span class="kind">Setup</span>', route: '<span class="kind kind-route">Questing</span>', "class": '<span class="kind kind-class">Class</span>', gear: '<span class="kind kind-gear">Gear &amp; addons</span>' }[k] || "";
+    return { prof: '<span class="kind kind-prof">Professions</span>', setup: '<span class="kind">Setup</span>',route: '<span class="kind kind-route">Questing</span>', "class": '<span class="kind kind-class">Class</span>', gear: '<span class="kind kind-gear">Gear &amp; addons</span>' }[k] || "";
   }
 
   function updateBar(p) {
@@ -300,7 +410,12 @@
 
   reveal(document); // static frames (picker, explainer) fade in too
 
+  if (page === "professions") {
+    renderProfessions();
+    if (location.hash) { var pt = document.getElementById(location.hash.slice(1)); if (pt) setTimeout(function () { pt.scrollIntoView(); }, 0); }
+  }
   if (page === "classes") {
+    renderMatrix();
     renderClasses();
     if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) setTimeout(function () { t.scrollIntoView(); }, 0); }
   }
