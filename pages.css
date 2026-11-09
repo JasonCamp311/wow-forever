@@ -291,3 +291,10 @@
 
 /* guide pages: no scroll-reveal, content is always visible (the fade hid content twice) */
 .subpage [data-reveal] { opacity: 1; transform: none; transition: none; }
+
+/* pets.html: family table reads left-aligned */
+.pettable { min-width: 52rem; }
+.pettable th, .pettable td { text-align: left; padding: .45rem .7rem; }
+.pettable td:nth-child(3) { white-space: nowrap; font-family: var(--mono); font-size: .8rem; }
+.pettable small { color: var(--gold); font-size: .65rem; text-transform: uppercase; }
+#death { scroll-margin-top: 5rem; }
