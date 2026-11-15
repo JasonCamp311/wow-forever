@@ -32,6 +32,8 @@ PROJECTS = {
     1715322: "ForeverBiS (BiS lists, dungeon maps)",
     486246: "RestedXP Guide (free routes to ~20)",
     1698137: "ForeverWisp (free 1-20 routes)",
+    1698950: "GearQuest Forever (BiS upgrades per slot + where they drop)",
+    1696140: "Offhand (dual-monitor UI; needs windowed mode, /offhand to set up)",
 }
 HEADERS = {"User-Agent": "wow-forever-guide-installer/1.0"}
 

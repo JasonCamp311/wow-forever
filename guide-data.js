@@ -15,6 +15,7 @@ window.FOREVER = (function () {
     dj:        { name: "DungeonJournal", cmd: "/dj", q: "epic", installed: true, what: "bosses, quests and loot for every dungeon. Turn on RPG mode if you want pages to unlock as you clear." },
     bis:       { name: "ForeverBiS", cmd: "/bis", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/foreverbis", what: "BiS lists for all 28 specs, quest chains per dungeon, and dungeon maps (the Forever client has none)." },
     atlas:     { name: "AtlasLoot Forever", cmd: "/atlasloot", q: "rare", installed: true, url: "https://www.curseforge.com/wow/addons/atlasloot-classic-forever", what: "loot tables by boss with BiS tooltips. Take the Forever one by Sliccer; the old AtlasLootClassic has no Forever file." },
+    gearquest: { name: "GearQuest Forever", cmd: "", q: "epic", installed: true, url: "https://www.curseforge.com/wow/addons/gearquest-forever", what: "right-click a gear slot for the best upgrades at your level and where they drop, then track the hunt like a quest." },
     pawn:      { name: "Pawn", cmd: "/pawn", q: "rare", installed: true, url: "https://www.curseforge.com/wow/addons/pawn", what: "green upgrade arrows on item tooltips, using a stat scale for your spec." },
     tomtom:    { name: "TomTom", cmd: "/way", q: "uncommon", installed: true, what: "waypoint arrow to any coordinate." },
     gather:    { name: "GatherMate2", cmd: "/gathermate", q: "uncommon", installed: true, what: "remembers every herb and ore node you pass." },
